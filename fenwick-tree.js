@@ -1,41 +1,38 @@
-const { clone } = require('./utils')
-module.exports = class FenwickTree extends Array {
+module.exports = class BinaryIndexedTree {
 
-  static instance(dimensions) {
-    const init = (i = 0, depth = 0) => {
-      if (i > dimensions.length - 1) return 0
-      const tree = new FenwickTree(dimensions[0])
-      tree.dimensions = dimensions
-      tree.depth = depth
-      return clone(tree.fill(init(i + 1, depth + 1)))
+  constructor(dimensions, depth = 0) {
+    const [anyDimension] = dimensions // The dimensions always will be equal to N
+    this.dimensions = dimensions
+    this.size = anyDimension
+    this.depth = depth
+    this.array = []
+    for (let i = 0; i < anyDimension; i ++) {
+      this.deepest ? this.array.push(0) : this.array.push(new BinaryIndexedTree(dimensions, depth + 1))
     }
-    return init()
   }
 
   update(coordinates, value) {
     let i = coordinates[this.depth]
-    let shouldAccumulate = true
-    while(i <= this.length) {
-      if (this.depth === this.dimensions.length - 1) {
-        this[i - 1] += value
-      }
-      else {
-        this[i - 1].update(coordinates, value)
-      }
+    while (i <= this.size) {
+      const k = i - 1
+      this.deepest ? this.array[k] += value : this.array[k].update(coordinates, value)
       i = i + (i & -i)
     }
   }
 
   sum(coordinates) {
     let i = coordinates[this.depth]
-    let sum = 0
-    let deeper = depth => depth === this.dimensions.length - 1
-    while(i > 0) {
-      const value = (deeper(this.depth)) ? this[i -1] : this[i - 1].sum(coordinates)
-      sum += value
+    let carry = 0
+    while (i > 0) {
+      const k = i - 1
+      carry += this.deepest ? this.array[k] : this.array[k].sum(coordinates)
       i -= (i & -i)
     }
-    return sum
+    return carry
+  }
+
+  get deepest() {
+    return this.depth == this.dimensions.length - 1
   }
 
 }
