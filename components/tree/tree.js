@@ -1,9 +1,9 @@
 module.exports = class BinaryIndexedTree {
 
-  constructor(dimensions, depth = 0) {
-    const [anyDimension] = dimensions // The dimensions always will be equal to N
+  constructor(dimensions = [4, 4, 4], depth = 0) {
+    const [anyDimension] = dimensions
     this.dimensions = dimensions
-    this.size = anyDimension
+    this.size = anyDimension // The dimensions always will be equal to N
     this.depth = depth
     this.array = []
     for (let i = 0; i < anyDimension; i ++) {
