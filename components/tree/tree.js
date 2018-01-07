@@ -13,6 +13,7 @@ module.exports = class BinaryIndexedTree {
 
   update(coordinates, value) {
     let i = coordinates[this.depth]
+    let r = 0
     while (i <= this.size) {
       const k = i - 1
       this.deepest ? this.array[k] += value : this.array[k].update(coordinates, value)
@@ -33,6 +34,11 @@ module.exports = class BinaryIndexedTree {
 
   get deepest() {
     return this.depth == this.dimensions.length - 1
+  }
+
+  element(coordinates, i = 0) {
+    if (this.deepest) return this.array[coordinates[i] - 1]
+    return this.array[coordinates[i] - 1].element(coordinates, i + 1)
   }
 
 }
