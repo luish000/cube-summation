@@ -5,9 +5,11 @@ module.exports = class BinaryIndexedTree {
     this.dimensions = dimensions
     this.size = anyDimension // The dimensions always will be equal to N
     this.depth = depth
-    this.array = []
-    for (let i = 0; i < anyDimension; i ++) {
-      this.deepest ? this.array.push(0) : this.array.push(new BinaryIndexedTree(dimensions, depth + 1))
+    this.array = this.deepest ? new Float64Array(anyDimension) : []
+    if (!this.deepest) {
+      for (let i = 0; i < anyDimension; i ++) {
+        this.array.push(new BinaryIndexedTree(dimensions, depth + 1))
+      }
     }
   }
 
@@ -36,9 +38,10 @@ module.exports = class BinaryIndexedTree {
     return this.depth == this.dimensions.length - 1
   }
 
-  element(coordinates, i = 0) {
+  get(coordinates, i = 0) {
     if (this.deepest) return this.array[coordinates[i] - 1]
-    return this.array[coordinates[i] - 1].element(coordinates, i + 1)
+    return this.array[coordinates[i] - 1].get(coordinates, i + 1)
   }
+
 
 }
