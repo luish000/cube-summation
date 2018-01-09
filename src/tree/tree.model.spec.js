@@ -11,10 +11,6 @@ describe('Tree model', () => {
 
   let tree = {}
 
-  after(() => {
-    server.close()
-  })
-
   it('should create a tree document in the DB', async function() {
     tree = await Tree.create({dimensions: [2, 2, 2], allowedOperations: 10 })
   })
