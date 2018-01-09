@@ -14,7 +14,7 @@ describe('Coordinate model', () => {
 
   it('should create a coordinate document in the DB', async function() {
     tree = await Tree.create({dimensions: [2, 2, 2], allowedOperations: 10 })
-    coordinate = await Coordinate.create({tree: tree._id, value: [2, 2, 2], content: 10})
+    coordinate = await Coordinate.create({tree: tree._id, coordinate: [2, 2, 2], value: 10})
   })
 
 })

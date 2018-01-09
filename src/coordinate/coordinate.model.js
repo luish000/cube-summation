@@ -3,8 +3,8 @@ const Schema = mongoose.Schema
 
 const schema = {
   tree: Schema.Types.ObjectId,
-  content: Number,
-  value: []
+  value: Number,
+  coordinate: []
 }
 
 let Coordinate = mongoose.model('Coordinate', schema)

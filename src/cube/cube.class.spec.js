@@ -10,10 +10,9 @@ describe('Cube class', () => {
   let square = {}
 
   before(done => {
-    cube = new Cube(4)
+    cube = new Cube(4, 10)
     done()
   })
-
 
   it('should update a given coordinate with a given value', done => {
     const coordinates = [[2, 2, 2], [1, 1, 1]]

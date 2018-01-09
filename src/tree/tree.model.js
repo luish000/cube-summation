@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const schema = {
   dimensions: Array,
-  allowedOperations: Number
+  queries: Number
 }
 
 let Tree = mongoose.model('Tree', schema)
