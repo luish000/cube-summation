@@ -13,7 +13,6 @@ describe('Tree model', () => {
 
   after(() => {
     server.close()
-    mongoose.connection.close()
   })
 
   it('should create a tree document in the DB', async function() {
