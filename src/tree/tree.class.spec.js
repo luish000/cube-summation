@@ -1,10 +1,10 @@
 const chai = require('chai')
 const path = require('path')
-const BinaryIndexedTree = require('./tree')
+const BinaryIndexedTree = require('./tree.class')
 
 chai.should()
 
-describe('Tree', () => {
+describe('Tree class', () => {
 
   let cube = {}
   let square = {}
