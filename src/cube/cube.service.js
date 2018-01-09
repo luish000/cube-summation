@@ -1,12 +1,22 @@
+const Cube = require('tree/tree.model.js')
 
 class CubeService {
 
-  query([a, b, c], [d, e, f]) {
-
+  async create({ n, m }) {
+    const values = { dimensions: [n, n, n], allowedOperations: m }
+    return await Tree.create(values)
   }
 
-  update([a, b, c], value) {
+  async query({ _id, from, to }) {
+    const { allowedOperations, dimensions } = await Tree.findOne({ _id })
+    const coordinates = await Coordinate.find({ tree: cube })
+    return new BinaryIndexedTree(dimensions).use(coordinates).sum(to)
+  }
 
+  update({ coordinate, value }) {
+    const { allowedOperations, dimensions } = await Tree.findOne({ _id })
+    const coordinates = await Coordinate.find({ tree: cube })
+    return new BinaryIndexedTree(dimensions).use(coordinates).update(coordinate, value)
   }
 
 }

@@ -91,4 +91,15 @@ module.exports = class BinaryIndexedTree {
     return this.array[coordinates[i] - 1].get(coordinates, i + 1)
   }
 
+  set(coordinates, value, i = 0) {
+    if (this.deepest) return this.array[coordinates[i] - 1] = value
+    return this.array[coordinates[i] - 1].set(coordinates, value, i + 1)
+  }
+
+  use(values) {
+    const self = this
+    values.forEach(e => self.set(e.coordinate, e.value))
+    return this
+  }
+
 }

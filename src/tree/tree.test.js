@@ -44,8 +44,23 @@ describe('Tree', () => {
     done()
   })
 
+  it('should set a value in a given coordinate', done => {
+    const coordinate = [2, 2]
+    const value = 69
+    square.set(coordinate, value)
+    square.get(coordinate).should.equal(69)
+    done()
+  })
+
   it('should get a single element from the cube', done => {
     cube.get([1, 1, 1]).should.equal(23)
+    done()
+  })
+
+  it('should use an array of a values in a given coordinates', done => {
+    const coordinates = [{ coordinate: [2, 2], value: 68 }]
+    const matrix = new BinaryIndexedTree([2, 2]).use(coordinates)
+    matrix.get([2, 2]).should.equal(68)
     done()
   })
 
