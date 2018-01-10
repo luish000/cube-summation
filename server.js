@@ -13,8 +13,16 @@ app.use(cube.allowedMethods());
 
 mongoose.Promise = global.Promise;
 const mongooseUri = `mongodb://${config.database.host}:${config.database.port}/`
+
 mongoose.connect(mongooseUri, {useMongoClient: true})
 
-new Interactor().start()
+mongoose.connection.on("error", function(err) {
+  console.log(`Failed to connect to DB make sure that the database is running on ${mongooseUri}`)
+})
+
+mongoose.connection.on("connected", function(ref) {
+  new Interactor().start()
+})
+
 
 module.exports = app.listen(config.server.port)
