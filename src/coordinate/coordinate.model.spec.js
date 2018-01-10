@@ -3,7 +3,7 @@ const path = require('path')
 const http = require('chai-http')
 const Coordinate = require('./coordinate.model.js')
 const Tree = require('../tree/tree.model.js')
-const server = require('../../server.js')
+const server = require('../../server.test.js')
 
 chai.should()
 

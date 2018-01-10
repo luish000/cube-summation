@@ -2,7 +2,7 @@ const chai = require('chai')
 const path = require('path')
 const http = require('chai-http')
 const Tree = require('./tree.model.js')
-const server = require('../../server.js')
+const server = require('../../server.test.js')
 const mongoose = require('mongoose')
 
 chai.should()
