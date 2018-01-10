@@ -15,7 +15,7 @@ However this problem is not based in a table or array of 1D instead is based in 
 # How to run
 
 1) use node 9.3.0 preferably
-2) you need to have installed mongodb
+2) you need to have isntalled mongodb
 3) you need that mongo db runs in localhost in the port 27017
 
 
@@ -33,3 +33,57 @@ $ npm test
 ```sh
 $ npm start
 ```
+
+# Refactorization
+
+```javascript
+async function postConfirm(ctx) {
+   const { id: serviceId, driverId } = ctx.request.body
+   let service = await Service.findOne({ id: serviceId })
+   if (!service) return ctx.response.body = { error: 3 }
+   switch(service.statusId) {
+     case '1': {
+       if (!service.driverId) {
+         let opts = { available: 0 }
+         const driver = await Driver.findOneAndUpdate({ id: driverId }, opts)
+         opts = { driverId, cardId: driver.cardId, statusId: 2 }
+         service = await Service.findOneAndUpdate({ id: serviceId }, opts)
+         await sendPush(service.user.uuid, service.user.type, { serviceId })
+         return ctx.response.body = { error: 0 }
+       }
+       return ctx.response.body = { error: 1 }
+     }
+     case '6': {
+       return ctx.response.body = { error: 2 }
+     }
+   }
+ }
+
+ async function sendPush(uuid, type, data) {
+   const push = await Push.make()
+   const message = 'Tu servicio ha sido confirmado'
+   if (!uuid) return
+   if (type == '1') {
+     push.ios(uuid, message, 1, 'how.wav', 'open', data)
+   } else {
+     push.ios(uuid, message, 1, 'default', 'open', data)
+   }
+}
+
+```
+
+# A clean code:
+
+1. Readable
+2. Semantic
+3. Organized
+4. Documented
+5. Simple
+6. Direct
+7. Easy to change and maintain
+8. Intuitive
+9. Efficient
+
+# Single responsibility principle
+
+The single responsibility principle is a computer programming principle that states that every module or class should have responsibility over a single part of the functionality provided by the software, and that responsibility should be entirely encapsulated by the class. All its services should be narrowly aligned with that responsibility. Robert C. Martin expresses the principle as, "A class should have only one reason to change

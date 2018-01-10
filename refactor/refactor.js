@@ -1,7 +1,7 @@
-async function postConfirm() {
-   const { id: serviceId, driverId } = this.request.body
+async function postConfirm(ctx) {
+   const { id: serviceId, driverId } = ctx.request.body
    let service = await Service.findOne({ id: serviceId })
-   if (!service) return this.response.body = { error: 3 }
+   if (!service) return ctx.response.body = { error: 3 }
    switch(service.statusId) {
      case '1': {
        if (!service.driverId) {
@@ -10,12 +10,12 @@ async function postConfirm() {
          opts = { driverId, cardId: driver.cardId, statusId: 2 }
          service = await Service.findOneAndUpdate({ id: serviceId }, opts)
          await sendPush(service.user.uuid, service.user.type, { serviceId })
-         return this.response.body = { error: 0 }
+         return ctx.response.body = { error: 0 }
        }
-       return this.response.body = { error: 1 }
+       return ctx.response.body = { error: 1 }
      }
      case '6': {
-       return this.response.body = { error: 2 }
+       return ctx.response.body = { error: 2 }
      }
    }
  }
