@@ -1,3 +1,9 @@
+## Refactor
+
+El código no refactorizado mostraba llamadas innecesarias a la base de datos, así como tambien comentarios innecesarios, ademas de otros detalles como solicitar los parámetros recibidos por el POST, adicionalmente el código no era lo suficientemente legible por la cantidad de operaciones que realizaba el método, con esta refactorización se realizan menos llamadas a la base de datos, se extraen una sola vez las variables del body de la petición, y se disminuye la sobrecarga que antes tenia el método
+
+
+
 ## Características de un código limpio:
 
 
